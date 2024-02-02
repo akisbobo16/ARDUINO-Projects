@@ -1,0 +1,53 @@
+#include<L298N.h> //install library...now upload this to your uno board
+L298N motor1(3,4,5);//(speedcontrl , pin1 ,pin2)
+L298N motor2(10,9,8);//(speedcontrl2 , pin3 ,pin4)
+char t;
+void setup() {
+Serial.begin(9600);
+}
+
+void loop() {
+if(Serial.available()){
+  t = Serial.read();
+  Serial.println(t);
+}
+ 
+if(t == 'F'){            //move  forward(all motors rotate in forward direction)
+  motor1.setSpeed(100);
+  motor2.setSpeed(100);
+  motor1.forward();
+  motor2.forward();
+}
+ 
+else if(t == 'B'){      //move reverse (all  motors rotate in reverse direction)
+  motor1.setSpeed(100);
+  motor2.setSpeed(100);
+  motor1.backward();
+  motor2.backward();
+}
+  
+else if(t == 'L'){      //turn right (left side motors rotate in forward direction,  right side motors doesn't rotate)
+  motor1.setSpeed(100);
+  motor2.setSpeed(100);
+  motor1.forward();
+  motor2.backward();
+}
+ 
+else  if(t == 'R'){      //turn left (right side motors rotate in forward direction, left  side motors doesn't rotate)
+  motor1.setSpeed(100);
+  motor2.setSpeed(100);
+  motor1.backward();
+  motor2.forward();
+}
+
+
+ 
+else if(t == 'S'){      //STOP (all motors stop)
+  motor1.setSpeed(100);
+  motor2.setSpeed(100);
+  motor1.stop();
+  motor2.stop();
+}
+delay(100);
+ 
+}
